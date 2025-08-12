@@ -14,6 +14,7 @@ import { GiGoldBar } from 'react-icons/gi'
 
 function MainContent() {
     const { uploaded, uploadResult, settings } = useContext(MainContext)
+    console.log(settings)
     // console.log(settings)
     
     // useEffect(()=>{

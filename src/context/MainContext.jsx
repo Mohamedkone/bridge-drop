@@ -26,6 +26,8 @@ export const MainProvider = ({children}) => {
     const [settings, setSettings] = useState(null)
     const [fetched, setFetched] = useState(false)
     const [uploadProgress, setUploadProgress] = useState({});
+    const api = import.meta.env.VITE_API
+    const storage = import.meta.env.VITE_STORAGE
 
     const cookieTheme = `theme=${siteTheme}`
     useEffect(()=>{
@@ -35,13 +37,18 @@ export const MainProvider = ({children}) => {
 
     useLayoutEffect(()=>{
         const fetch = async() =>{
-            await axios.get(`http://localhost:3001/livebridges/link/${myId}`).then((res)=>{
-                if(res.data){
-                    setVerified(()=>true)
-                    setSettings(()=>res.data)
-                    console.log(res.data)
-                }
-            }).then(()=>setFetched(true))
+            try{
+
+                await axios.get(`${api}/livebridges/link/${myId}`).then((res)=>{
+                    if(res.data){
+                        setVerified(()=>true)
+                        setSettings(()=>res.data)
+                    }
+                }).then(()=>setFetched(true))
+            }catch{
+                    setFetched(()=>true)
+                    setVerified(()=>false)
+            }
         }
         fetch()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -66,7 +73,8 @@ export const MainProvider = ({children}) => {
         <MainContext.Provider value={{
             uploading, setUploading, uploadResult, setUploadResult,
             uploaded, setUploaded, siteTheme, setSiteTheme, verified,
-            settings, fetched, uploadProgress, setUploadProgress
+            settings, fetched, uploadProgress, setUploadProgress,
+            storage, api
             }}>
             {children}
         </MainContext.Provider>

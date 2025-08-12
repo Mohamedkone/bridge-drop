@@ -3,6 +3,7 @@ import { Switch } from "./ui/chakraui/switch"
 import { FiMoon, FiSun } from "react-icons/fi";
 import { useContext } from "react";
 import { MainContext } from "../context/MainContext";
+import Logo from "../assets/logo.svg"
 function Header() {
     const { siteTheme, setSiteTheme } = useContext(MainContext)
 
@@ -13,7 +14,9 @@ function Header() {
 
     return (
         <Box className="header">
-            <Box></Box>
+            <Box>
+                <img src={Logo} alt="lockbridge logo" width={"50px"} style={{boxShadow:"0 1px 5px 5px #fff", background:"#fff"}} />
+            </Box>
             <Box className="themeSwitch">
                 <Switch
                     checked={siteTheme === "light"? true : false}
